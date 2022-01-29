@@ -1,0 +1,16 @@
+name: Deploy aws ecr to ec2
+
+on:
+  push:
+    branches:h
+      - main
+
+jobs:
+  deploy:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      run: ls
