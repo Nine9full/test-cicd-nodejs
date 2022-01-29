@@ -2,11 +2,10 @@ name: Deploy aws ecr to ec2
 
 on:
   push:
-    branches:h
-      - main
+    branches: [ main ]
 
 jobs:
-  deploy:
+  build:
     name: Build image
     runs-on: ubuntu-latest
 
