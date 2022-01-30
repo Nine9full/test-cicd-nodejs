@@ -49,12 +49,11 @@ jobs:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        script:  sudo docker stop ${{ secrets.AWS_ECR_REPOSITORY }} || sudo docker system prune --all && sudo docker stop $(sudo docker ps -aq)
-
+        script:  sudo docker stop ${{ secrets.AWS_ECR_REPOSITORY }} || sudo docker system prune --all
     - name: Run production on ec2 server
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        script:  echo steps.kill-containers && sudo docker pull ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest && sudo docker run -p 8000:3000 -d --name ${{ secrets.AWS_ECR_REPOSITORY }} ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+        script:  echo steps.kill-containers && sudo docker pull ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest && sudo docker stop $(sudo docker ps -aq) && sudo docker run -p 8000:3000 -d --name ${{ secrets.AWS_ECR_REPOSITORY }} ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
