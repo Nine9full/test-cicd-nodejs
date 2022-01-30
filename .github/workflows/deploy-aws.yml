@@ -32,7 +32,10 @@ jobs:
         ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
         IMAGE_TAG: 1.0
       run: |
-        docker build -t ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest .
+        docker build -t ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }} .
+        docker image tag ${{ secrets.AWS_ECR_REPOSITORY }}:1.0 ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:1.0
+        docker image tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+        docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:1.0
         docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
 
     - name: Run production on ec2 server
