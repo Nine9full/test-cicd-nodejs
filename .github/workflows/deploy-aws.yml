@@ -52,7 +52,7 @@ jobs:
         script:  sudo docker stop ${{ secrets.AWS_ECR_REPOSITORY }} && sudo docker system prune --all 
 
     - name: Run production on ec2 server
-      if: steps.kill-containers.outputs.status != 'success' || steps.kill-containers.outputs.status != 'success'
+      run: echo steps.kill-containers
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.REMOTE_HOST }}
