@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 const users = [];
 
 app.get("/", (req, res) => {
-  res.send({ message: "Hello World! Users" });
+  res.send({ message: "Hello World! Users naja" });
 });
 
 app.get("/v1/user/:name", (req, res) => {
